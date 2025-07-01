@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "html-pdf-node": "^1.0.0",
+    "jspdf": "^3.0.1",
     "next": "latest",
-    "openai": "^4.0.0",
+    "openai": "^4.104.0",
     "react": "latest",
     "react-dom": "latest"
   }
