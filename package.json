@@ -1,0 +1,17 @@
+{
+  "name": "generador-pdf-ia",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "chrome-aws-lambda": "^10.1.0",
+    "next": "latest",
+    "openai": "^4.0.0",
+    "puppeteer-core": "^21.3.8",
+    "react": "latest",
+    "react-dom": "latest"
+  }
+}
