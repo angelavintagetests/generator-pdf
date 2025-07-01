@@ -7,10 +7,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "chrome-aws-lambda": "^10.1.0",
+    "html-pdf-node": "^1.0.0",
     "next": "latest",
     "openai": "^4.0.0",
-    "puppeteer-core": "^10.1.0",
     "react": "latest",
     "react-dom": "latest"
   }

@@ -1,6 +1,5 @@
 import OpenAI from 'openai';
-import chrome from 'chrome-aws-lambda';
-import puppeteer from 'puppeteer-core';
+import pdf from 'html-pdf-node';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -24,16 +23,9 @@ export default async function handler(req, res) {
       ]
     });
 
-    const content = completion.choices[0].message.content;
+    const content = completion.choices[0].message.content.replace(/\n/g, '<br>');
 
-    const browser = await puppeteer.launch({
-      args: chrome.args,
-      executablePath: await chrome.executablePath,
-      headless: true,
-    });
-
-    const pageInstance = await browser.newPage();
-    await pageInstance.setContent(`
+    const htmlContent = `
       <html>
         <head>
           <style>
@@ -43,14 +35,16 @@ export default async function handler(req, res) {
           </style>
         </head>
         <body>
-          ${content.replace(/\\n/g, '<br>')}
+          ${content}
           <footer>Generado automáticamente con IA</footer>
         </body>
       </html>
-    `, { waitUntil: 'networkidle0' });
+    `;
 
-    const pdfBuffer = await pageInstance.pdf({ format: 'A4', printBackground: true });
-    await browser.close();
+    const file = { content: htmlContent };
+    const options = { format: 'A4' };
+
+    const pdfBuffer = await pdf.generatePdf(file, options);
 
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${topic.replace(/ /g, '_')}.pdf"`);
